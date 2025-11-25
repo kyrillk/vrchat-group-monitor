@@ -13,3 +13,5 @@ This repository automatically generates a `Permissions.PSC` file for use with th
 ## Output
 
 Once the action runs, the file will appear in the `psc_output/` folder in this repository.
+
+https://github.com/kemocade/Kemocade.Vrc.Api.Tracker.Action
