@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.VRCHAT_USERNAME }}
           password: ${{ secrets.VRCHAT_PASSWORD }}
           key: ${{ secrets.VRCHAT_2FA_KEY }}
-          groups: 'grp_YOUR_GROUP_ID_HERE' # REPLACE THIS with your Group ID
+          groups: 'grp_24182cf8-55e4-4df9-8fe5-e62319baae9b' # REPLACE THIS with your Group ID
           psc: 'true'
 
       - name: Commit and Push Changes
