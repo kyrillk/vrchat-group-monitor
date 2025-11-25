@@ -37,7 +37,7 @@ jobs:
         uses: kemocade/Kemocade.Vrc.Api.Tracker.Action@e3d3d2e17b5c07027ef005c5b458c0b6e5959adc
         with:
           output: ${{ env.output }}
-          username: ${{ vars.VRCHAT_USERNAME }}
+          username: ${{ secrets.VRCHAT_USERNAME }}
           password: ${{ secrets.VRCHAT_PASSWORD }}
           key: ${{ secrets.VRCHAT_KEY }}
           worlds: ${{ vars.VRCHAT_WORLD_IDS }}
