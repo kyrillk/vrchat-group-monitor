@@ -1,0 +1,33 @@
+name: Generate VRChat PSC File
+
+on:
+  schedule:
+    # Runs every 12 hours. Adjust as needed.
+    - cron: '0 */12 * * *'
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  generate-psc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run VRChat API Tracker
+        uses: kyrillk/VrchatAPi@main
+        with:
+          output: 'psc_output' # Folder where the file will be saved
+          username: ${{ secrets.VRCHAT_USERNAME }}
+          password: ${{ secrets.VRCHAT_PASSWORD }}
+          key: ${{ secrets.VRCHAT_2FA_KEY }}
+          groups: 'grp_YOUR_GROUP_ID_HERE' # REPLACE THIS with your Group ID
+          psc: 'true'
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update Permissions.PSC"
+          file_pattern: 'psc_output/*.PSC'
