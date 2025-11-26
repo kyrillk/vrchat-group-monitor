@@ -38,6 +38,7 @@ jobs:
           key: ${{ secrets.VRCHAT_KEY }}
           groups: 'grp_24182cf8-55e4-4df9-8fe5-e62319baae9b'
           psc: 'true'
+          exclude: 'Member'
 
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
