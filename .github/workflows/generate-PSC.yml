@@ -6,11 +6,24 @@ on:
     - cron: '0 */12 * * *'
   workflow_dispatch: # Allows you to run it manually from the Actions tab
 
+# Allow workflow to commit and deploy to Pages
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+# Do not cancel in-progress Pages deploys
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   generate-psc:
+    env:
+      output: "psc_output"
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -19,15 +32,32 @@ jobs:
       - name: Run VRChat API Tracker
         uses: kyrillk/VrchatAPi@main
         with:
-          output: 'psc_output' # Folder where the file will be saved
+          output: ${{ env.output }} # Folder where the file will be saved
           username: ${{ secrets.VRCHAT_USERNAME }}
           password: ${{ secrets.VRCHAT_PASSWORD }}
           key: ${{ secrets.VRCHAT_KEY }}
-          groups: 'grp_24182cf8-55e4-4df9-8fe5-e62319baae9b' # REPLACE THIS with your Group ID
+          groups: 'grp_24182cf8-55e4-4df9-8fe5-e62319baae9b'
           psc: 'true'
 
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update Permissions.PSC"
-          file_pattern: 'psc_output/*.PSC'
+          file_pattern: '${{ env.output }}/*.PSC'
+
+      - name: Generate Directory Listings
+        uses: jayanta525/github-pages-directory-listing@624ac8c4e56893256d3772f61a88e3b14d54314e
+        with:
+          FOLDER: ${{ env.output }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.output }}
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
