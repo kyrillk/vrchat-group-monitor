@@ -1,6 +1,6 @@
 # VRChat Permission PSC Generator
 
-This repository automatically generates a `Permissions.PSC` file for use with the permission package.
+This repository automatically generates a `Permissions.TXT` file for use with the permission package.
 
 ## Setup
 
