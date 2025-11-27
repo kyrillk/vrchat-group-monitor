@@ -20,7 +20,7 @@ concurrency:
 jobs:
   generate-psc:
     env:
-      output: "psc_output"
+      output: "output"
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -29,7 +29,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Run VRChat API Tracker
+      - name: Run VRChat API Permission
         uses: kyrillk/VrchatAPi@main
         with:
           output: ${{ env.output }} # Folder where the file will be saved
@@ -56,7 +56,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ env.output }}
